@@ -1,0 +1,1 @@
+docker run --name roach-warden --link spawning-pool:zerglings -e MYSQL_ROOT_PASSWORD=Kerrigan -e PMA_HOST="spawning-pool" -e PMA_PORT=3306 -d -p 8081:80 phpmyadmin/phpmyadmin
