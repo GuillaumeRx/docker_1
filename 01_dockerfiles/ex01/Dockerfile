@@ -3,6 +3,7 @@ FROM debian:latest
 RUN apt-get update \
 	&& apt-get install -y wget \
 	&& apt-get install -y bzip2
+	
 RUN wget https://files.teamspeak-services.com/releases/server/3.6.1/teamspeak3-server_linux_amd64-3.6.1.tar.bz2
 RUN tar -xvf teamspeak3-server_linux_amd64-3.6.1.tar.bz2
 RUN rm teamspeak3-server_linux_amd64-3.6.1.tar.bz2

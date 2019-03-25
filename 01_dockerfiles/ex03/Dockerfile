@@ -1,21 +1,16 @@
-FROM ubuntu:latest
+FROM debian:latest
 
-RUN apt-get -y update && apt-get -y upgrade
-RUN apt-get install -y openssh-server \
+RUN apt-get update
+RUN apt-get install -y curl \
+openssh-server \
 ca-certificates \
 postfix \
-tzdata \
-curl
+tzdata
 
-RUN curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash
+RUN curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash && apt-get -y install gitlab-ce
 
-EXPOSE 80 
+ENTRYPOINT service ssh start && (/opt/gitlab/embedded/bin/runsvdir-start &) && gitlab-ctl reconfigure && tail -f /dev/null
+
+EXPOSE 80
 EXPOSE 443
 EXPOSE 22
-
-RUN service ssh restart
-
-RUN EXTERNAL_URL="https://gitlab.example.com" apt-get install -y gitlab-ce
-RUN /opt/gitlab/embedded/bin/runsvdir-start &
-
-ENTRYPOINT gitlab-ctl reconfigure
