@@ -3,7 +3,8 @@ FROM ruby:latest
 RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get -y install sqlite3 \
 mysql-client \
-tzdata
+tzdata \
+nodejs
 
 RUN gem install rails
 
@@ -11,7 +12,7 @@ RUN mkdir -p /opt/app
 
 WORKDIR /opt/app
 
-ONBUILD ADD app/ opt/app
+ONBUILD ADD ./ /opt/app
 ONBUILD RUN bundle install
 
 ONBUILD RUN rails db:migrate
